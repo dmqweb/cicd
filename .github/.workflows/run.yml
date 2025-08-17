@@ -1,0 +1,21 @@
+name: 构建build分支，自动进行部署
+on: push
+jobs:
+  npm-build:
+    name: npm-build工作
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 读取仓库内容
+        uses: actions/checkout@v4
+
+      - name: 安装依赖和项目打包
+        run: |
+          npm install
+          npm run build
+
+      - name: 部署
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: dmqweb-pages
+          folder: build
